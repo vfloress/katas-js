@@ -1,109 +1,107 @@
-# Workshop Test, Commit || Revert
+# Bienvenidxs a las sesiones de coding
 
-Vamos a jugar a un juego
+El objetivo principal de estas sesiones será resolver problemas de código. A medida que vayamos avanzando, veremos
+si podemos aplicar patrones o poner en práctica algún tema que nos interese.
 
-![](https://media.giphy.com/media/3o7TKSxdQJIoiRXHl6/giphy.gif)
+Hoy os presento un pequeño ejercicio: **Vigenère cipher**.
 
-Hoy vamos a trastear un poco con la técnica de programación Test,Commit||Revert (TCR) que consiste en
-definir un test e intentar ponerlo en verde, si en este proceso la ejecución de nuestros tests falla se hará un revert,
-divertido ¿no?
+### ¿En qué consiste?
+Tendremos la siguiente tabla que forma un diccionario con las letras del alfabeto.
 
-## ¿Cómo vamos a hacerlo?
-Os hemos preparado un script para hacer más rápido el proceso, teneís la posibilidad de
-ejecutarlo en vuestro local si teneís ya instalado node o podeís ejecutarlo usando docker.
+|     | A   | B   | C   | D   | E   | F   | G   | H   | I   | J   | K   | L   | M   | N   | O   | P   | Q   | R   | S   | T   | U   | V   | W   | X   | Y   | Z   |
+|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+| A   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   |
+| B   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   |
+| C   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   |
+| D   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   |
+| E   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   |
+| F   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   |
+| G   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   |
+| H   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   |
+| I   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   |
+| J   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   |
+| K   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   |
+| L   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   |
+| M   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   |
+| N   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   |
+| O   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   |
+| P   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   |
+| Q   | q   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   |
+| R   | r   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   |
+| S   | s   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   |
+| T   | t   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   |
+| U   | u   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   |
+| V   | v   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   |
+| W   | w   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   |
+| X   | x   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   |
+| Y   | y   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   |
+| Z   | z   | a   | b   | c   | d   | e   | f   | g   | h   | i   | j   | k   | l   | m   | n   | o   | p   | q   | r   | s   | t   | u   | v   | w   | x   | y   |
 
-### Ejecución en local
-Primero daremos permiso de ejecución al script
+A continuación se decide una palabra secreta que es la que codificará el mensaje. Idealmente esta palabra no debería ser escrita en ningún sitio.
+
+Y para codificar el mensaje, lo primero que habría que hacer es escribirlo de la siguiente manera:
+
 ```
-chmod +x TCR.sh
-```
-Y ya podeis ejecutarlo sin problemas
-```
-./TCR.sh
+estoesunaprueba
 ```
 
-En el caso de windows tenéis el siguiente script
-```
-TCR.bat
-```
+Entonces añadimos la palabra secreta que será **_coding_**, repitiendola las veces necesarias:
 
-### Ejecución con Docker
-Primero daremos permiso de ejecución al script
 ```
-chmod +x TCR-docker.sh
-```
-Y ya podeis ejecutarlo sin problemas
-```
-./TCR-docker.sh
+codingcodingcod
+estoesunaprueba
 ```
 
-> 🚨 Usad siempre el script para avanzar, si no estaréis haciendo trampa!!
+Ahora miramos en la parte superior de la tabla la letra del mensaje y la letra de la clave en la columna de la izquierda, cogemos el valor de esta intersección. Así vamos iterando hasta la última letra a codificar.
 
+```
+codingcodingcod
+estoesunaprueba
+ggwwrywbdxeagpd
+```
 
-## Kata Nómina
+El resultado de la codificación sería: **ggwwrywbdxeagpd**
 
-### Problema a resolver
+Nota: si quisieramos decodificar el mensaje, lo único que tendríamos que hacer es utilizar la palabra secreta y buscarla en la columna de la izquierda
+luego recorremos hasta encontrar la letra del mensaje cifrado y ver a qué letra le corresponde en la parte superior.
 
-Somos las dueñas del Family Vídeo club en Hawkins y necesitamos un programa que genere las nóminas de nuestros empleados mensualmente. Cada nómina contiene: id del empleado, nombre completo, salario bruto mensual, contribuciones de seguridad social e impuestos.
-
-Como somos muy agile MUAHAHAH, lo vamos a hacer por iteraciones.
 
 ### Primera iteración:
 
-Datos básicos de la nómina mensual
+Vamos a codificar el siguiente mensaje con la palabra clave **QUEENS**:
 
-Dado que tengo un empleado que se llama Steve Harrington con id 67563 y con un salario anual en bruto de 5000 $.
+```
+QUEHAREMOSESTANOCHECEREBRO
+```
 
-Cuando se genere su nómina
+El cifrado debe ser:
 
-Entonces la nómina contendrá la siguiente información:
+```
+GOILNJUGSWRKJURSPZUWIVRTHI
+```
 
-- Employee ID: 67563
+Otro ejemplo mensaje con palabra clave **ROSALIA**:
 
-- Employee name: Steve Harrington
+```
+BABYNOMELLAMEQUEYOESTOYOCUPAOLVIDANDOTUSMALE
+```
 
-- Monthly gross salary: 416.67$
+El cifrado debe ser:
 
-La regla para calcular el salario en bruto es dividir el salario anual bruto entre 12 meses.
+```
+SOTYYWMVZDAXMQLSQOPATFMGCFXAFZNIOINUCLUDUACS
+```
 
 ### Segunda iteración:
 
-Necesitamos saber la contribución a la seguridad social.
+Vamos a decodificar el siguiente mensaje con la palabra clave **KITTY**:
 
-Dado que tengo un empleado que se llama Robin Buckley con id  54637 y con un salario anual en bruto de 9060 $.
+```
+CPHPKOBAXKYVXR
+```
 
-Cuando se genere su nómina
+El resultado descifrado es:
 
-Entonces la nómina contendrá la siguiente información:
-
-- Employee ID: 54637
-
-- Employee name: Robin Buckley
-
-- Monthly gross salary: 755.00$
-
-- National Insurance contributions: 10.00$
-
-Para calcular la contribución a la seguridad social se aplicará un 12% cuando el salario bruto anual supera los 8060$.
-
-### Tercera iteración:
-
-Le hemos subido el sueldo a Robin pero tendrá que pagar impuestos MUAHAHAHA.
-
-Dado que tengo un empleado que se llama Robin Buckley con id  54637 y con un salario anual en bruto de 12000 $.
-
-Cuando se genere su nómina
-
-Entonces la nómina contendrá la siguiente información:
-
-- Employee ID: 54637
-
-- Employee name: Robin Buckley
-
-- Monthly gross salary: 1000.00$
-
-- National Insurance contributions: 39.40$
-
-- Taxable income: 83.33$
-
-Podéis encontrar una tabla con varios ejemplos completos en [EXAMPLE.md](EXAMPLE.md)
+```
+SHOWMETHEMONEY
+```

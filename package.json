@@ -1,12 +1,14 @@
 {
-  "name": "workshop-tcr-ts",
+  "name": "katas-js",
   "version": "1.0.0",
-  "description": "TCR workshop",
+  "description": "Katas",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "npm": "^8.19.2"
+  },
   "devDependencies": {
     "mocha": "^10.0.0"
   },
@@ -15,15 +17,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vfloress/workshop-tcr-ts.git"
+    "url": "git+https://github.com/vfloress/katas-js.git"
   },
   "keywords": [
     "tcr"
   ],
-  "author": "isagarrido&veroflores",
+  "author": "veroflores",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vfloress/workshop-tcr-ts/issues"
+    "url": "https://github.com/vfloress/katas-js/issues"
   },
-  "homepage": "https://github.com/vfloress/workshop-tcr-ts#readme"
+  "homepage": "https://github.com/vfloress/katas-js#readme"
 }
