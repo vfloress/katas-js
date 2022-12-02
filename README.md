@@ -16,7 +16,7 @@ que elimine los años divisibles por 4000 como años bisiestos.
 Pero supongo que cruzaremos ese puente cuando lleguemos a él ;) .
 
 
-### Historia de usuario 1
+### Escenario 1
 ```
 Como usuario, quiero saber si un año es bisiesto.
 
@@ -29,7 +29,7 @@ Los criterios de aceptación son los siguientes:
 
 ```
 
-### Historia de usuario 2
+### Escenario 2
 ```
 Como usuario, dado un rango de años quiero saber todos los años que son bisiestos.
 
