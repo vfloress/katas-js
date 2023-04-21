@@ -51,3 +51,4 @@ Si deseas subir tu solución, simplemente crea una rama: `tunombre-nombrekata` p
 - Leap years [LEAPYEARS.md](old-katas/LEAPYEARS.md)
 - Pyramid sliding [PYRAMIDSLIDING.md](old-katas/PYRAMIDSLIDING.md)
 - Nearest prime numbers and gossip bus drivers [NEARESTPRIMENUMBERS_GOSSIPBUSDRIVERS.md](old-katas/NEARESTPRIMENUMBERS_GOSSIPBUSDRIVERS.md)
+- Harry Potter Bookstore [HARRYPOTTER.md](old-katas/HARRYPOTTER.md)
